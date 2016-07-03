@@ -77,6 +77,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 showButtons.addClass('btn btn-success pull-right');
                 */
 
+                delbttns.on('click',function () {
+                    var bookid = $(this).parent().prev().attr('data-id');
+                    console.log(bookid);
+                    $.ajax({
+                        url: "http://localhost:8888/Bookshelf/api/src/Books.php",
+                        method: "DELETE",
+                        data: 'id=' + bookid,
+                        //dataType: 'JSON'
+
+                    }).done(function (data) {
+                        console.log(data);
+                        loadAllBooks();
+
+                    }).fail(function (xhr, status, errorThrown) {
+                        console.log('fail');
+                        console.log(status);
+                        console.log(errorThrown);
+                    })
+
+                });
+
                 descDiv.hide();
 
                 titleDiv.click(function () {
@@ -107,17 +128,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     };
 
-    var deleteBook = function () {
-        $.ajax({
-            url: "http://localhost:8888/Bookshelf/api/src/Books.php",
-            method: "DELETE",
-            dataType: "JSON"
 
-        }).done(function (data) {
-            console.log('delete ajax');
-        })
 
-    };
 
 
     loadAllBooks();

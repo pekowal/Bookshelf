@@ -119,5 +119,11 @@ class Book implements JsonSerializable
         ];
     }
 
+    public function deleteFromDB(mysqli $conn){
+        $sql = 'DELETE FROM Books WHERE id ='. $this->id;
+        $result = $conn->query($sql);
+        return $result;
+    }
+
 
 }

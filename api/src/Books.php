@@ -17,6 +17,10 @@ if($_SERVER['REQUEST_METHOD'] === "GET"){
     echo json_encode($allBooks);
 }
 if($_SERVER['REQUEST_METHOD'] === "DELETE"){
+    parse_str(file_get_contents("php://input"), $put_vars);
+
     $deletedBook = new Book();
-    //$deletedBook->loadFromDB($conn, )
+    $deletedBook->loadFromDB($conn, $put_vars['id']);
+    //echo json_encode($deletedBook);
+    $deletedBook->deleteFromDB($conn);
 }
