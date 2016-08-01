@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         var nextDiv = $(this).next();
 
-                        console.log(nextDiv.css('display'))
+                        console.log(nextDiv.css('display'));
 
                         if (nextDiv.css('display') == 'none') {
                             $(this).next('div').show();
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                 var editbttns = $('.editButtons');
-                editbttns.on('click', function (e) {
+                editbttns.on('click', function () {
 
                     var bookindex = $(this).parent().prev().attr('data-index');
                     var last = $(this).parent().find();
@@ -160,38 +160,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                     console.log(submitinput);
+                    submitinput.on('click', function (e) {
+                        e.preventDefault();
+
+                        console.log($(this));
+                        var bookid = $(this).parent().parent().prev().attr('data-id');
+
+                        var name = $(this).prev().prev().prev().children().val();
+                        var author = $(this).prev().prev().children().val();
+                        var description = $(this).prev().children().val();
+
+                        $.ajax({
+                            url: "http://localhost:8888/Bookshelf/api/src/Books.php",
+                            method: "PUT",
+                            data: "id=" + bookid + "&description=" + description + "&author=" + author + "&name=" + name
+
+                        }).done(function (data) {
+                            console.log(data);
+                            loadAllBooks();
+
+                        }).fail(function (xhr, status, errorThrown) {
+                            console.log('fail');
+                            console.log(status);
+                            console.log(errorThrown);
+                        })
+
+
+                    });
 
                 });
-                submitinput.on('click', function (e) {
-                    var bookindex = $(this).parent().parent().prev().attr('data-id');
-                    //console.log(bookindex);
 
-                    var name = nameInput.eq(0).val();
-                    var author = nameInput.eq(1).val();
-                    var description = nameInput.eq(2).val();
-
-
-                    //console.log(nameInput.eq(0));
-                    e.preventDefault();
-
-
-                    $.ajax({
-                        url: "http://localhost:8888/Bookshelf/api/src/Books.php",
-                        method: "PUT",
-                        data: "id=" + bookindex + "&description=" + description + "&author=" + author + "&name=" + name
-
-                    }).done(function (data) {
-                        console.log(data);
-                        loadAllBooks();
-
-                    }).fail(function (xhr, status, errorThrown) {
-                        console.log('fail');
-                        console.log(status);
-                        console.log(errorThrown);
-                    })
-
-
-                });
 
 
             }
