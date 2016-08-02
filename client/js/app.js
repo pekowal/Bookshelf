@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data: "name=" + name + "&description=" + description + "&author=" + author
 
         }).done(function (data) {
-            console.log('DONE');
+            //console.log('DONE');
 
             loadAllBooks();
 
@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(booksTable);
                 var bookDiv = $('#books');
                 bookDiv.empty();
+                //LOOP FOR CREATE BOOKS
                 for (var i = 0; i < booksTable.length; i++) {
                     var titleDiv = $('<button>');
                     titleDiv.attr('data-id', booksTable[i].id);
@@ -65,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     descDiv.text(booksTable[i].description);
 
 
-                    //titleDiv.text(booksTable[i].name + '' + booksTable[i].author);
                     descDiv.append($('<button class="delButton btn btn-danger pull-right">Delete</button>'));
                     descDiv.append($('<button class="editButtons btn btn-default pull-right">Edit</button>'));
                     titleDiv.appendTo(bookDiv);
@@ -74,11 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     var delbttns = $('.delButton');
                     delbttns.addClass('');
-                    /*
-                     var showButtons = $('.showButton');
-                     showButtons.addClass('btn btn-success pull-right');
-                     */
 
+                    //ADDED DELETE BOOK
                     delbttns.eq(i).on('click', function () {
                         var bookid = $(this).parent().prev().attr('data-id');
                         console.log(bookid);
@@ -86,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             url: "http://localhost:8888/Bookshelf/api/src/Books.php",
                             method: "DELETE",
                             data: 'id=' + bookid
-                            //dataType: 'JSON'
 
                         }).done(function (data) {
                             console.log(data);
@@ -102,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                     descDiv.hide();
-
+                    //SHOW/HIDE DESC/EDIT DIV
                     titleDiv.click(function () {
 
                         var nextDiv = $(this).next();
@@ -119,6 +115,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
 
                 }
+
+                //CREATE FORM
                 var editDescFrom = $('<form class="form-horizontal">');
 
                 var labelName = $('<label class="control-label">');
@@ -144,6 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                 var editbttns = $('.editButtons');
+
+                //ADDED EVENT TO SHOW FORM
                 editbttns.on('click', function () {
 
                     var bookindex = $(this).parent().prev().attr('data-index');
@@ -156,10 +156,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     nameInput.eq(1).attr('value', booksTable[bookindex].author);
                     nameInput.eq(2).attr('value', booksTable[bookindex].description);
 
-                    console.log(bookindex);
 
-
-                    console.log(submitinput);
+                    //ADDED PUT AND EVENT TO EDIT BOOK;
                     submitinput.on('click', function (e) {
                         e.preventDefault();
 
@@ -189,7 +187,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
 
                 });
-
 
 
             }
