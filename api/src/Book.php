@@ -100,7 +100,7 @@ class Book implements JsonSerializable
 
             }
         } else {
-            $sql = "UPDATE Books SET name = '{$this->name}' , description = '{$this->description}',author = '{$this->author}'";
+            $sql = "UPDATE Books SET name = '{$this->name}' , description = '{$this->description}',author = '{$this->author}' WHERE id='{$this->id}'";
             $result = $conn->query($sql);
             if ($result === true) {
                 return true;
